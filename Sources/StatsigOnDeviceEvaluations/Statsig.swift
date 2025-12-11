@@ -336,6 +336,19 @@ extension Statsig {
 }
 
 
+// MARK: Spec Enumeration
+
+extension Statsig {
+    /// Returns all spec names currently loaded in the store.
+    /// Useful for enumerating all gates, configs, and layers for bootstrap serialization.
+    public func getAllSpecNames() -> (gates: [String], configs: [String], layers: [String]) {
+        guard let context = getContext() else {
+            return ([], [], [])
+        }
+        return context.store.getAllSpecNames()
+    }
+}
+
 // MARK: Logging
 
 extension Statsig {

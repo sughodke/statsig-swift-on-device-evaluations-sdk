@@ -63,6 +63,15 @@ class SpecStore {
         queue.sync { self.sourceInfo }
     }
 
+    func getAllSpecNames() -> (gates: [String], configs: [String], layers: [String]) {
+        queue.sync {
+            let gates: [String] = specs[.gate].map { Array($0.keys) } ?? []
+            let configs: [String] = specs[.config].map { Array($0.keys) } ?? []
+            let layers: [String] = specs[.layer].map { Array($0.keys) } ?? []
+            return (gates: gates, configs: configs, layers: layers)
+        }
+    }
+
     func loadFromCache(_ sdkKey: String) {
         guard let data = FileUtil.readFromCache(sdkKey.djb2()) else {
             return
